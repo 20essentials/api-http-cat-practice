@@ -11,13 +11,15 @@ const port = process.env.PORT ?? 8000;
 const __dirname = import.meta.dirname;
 const imageBasePath = join(__dirname, 'public', 'images');
 
-app.get('/:statusCode', (req, res, next) => {
-  const statusCode = Number(req.params.statusCode);
+app.get('/:statusCode(.+)', (req, res, next) => {
+  const statusCode = Number(req.params.statusCode.replace('.jpg', ''));
   const existObject = LIST_ERRORS_HTTP.some(el => el.statusCode === statusCode);
   if (!existObject) return next();
+
   const image = join(imageBasePath, `${statusCode}.jpg`);
   res.status(200).sendFile(image);
 });
+
 
 app.use((_, res) => {
   const image404 = join(imageBasePath, '404.jpg');
