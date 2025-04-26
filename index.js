@@ -9,7 +9,7 @@ app.use(cors());
 app.use(helmet());
 const port = process.env.PORT ?? 8000;
 const __dirname = import.meta.dirname;
-const imageBasePath = join(__dirname, 'images');
+const imageBasePath = join(__dirname, 'public', 'images');
 
 app.get('/:statusCode', (req, res, next) => {
   const statusCode = Number(req.params.statusCode);
